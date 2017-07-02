@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Black clockface for Battery Saving Digital Clocks</string>
+    <string name="black">Black (plugin)</string><!-- Used in naming of clockfaces in the main application. name="..." must be the same as folder name and .obj file in assets\textures\packs -->
+
+    <!-- List of main applications for launching the plugin. In part of name="parameter_name" and name="parameter_id" parameter must be the same as file name without extension in assets\main_apps folder -->
+    <string name="app1_digital_clocks_lite_name">Battery Saving Digital Clocks Live Wallpaper Lite</string>
+    <string name="app2_digital_clocks_name">Battery Saving Digital Clocks Live Wallpaper</string>
+
+    <string name="app1_digital_clocks_lite_id" translatable="false">com.maxlab.digitalclocksbatterysavewallpaperlite</string>
+    <string name="app2_digital_clocks_id" translatable="false">com.maxlab.digitalclocksbatterysavewallpaper</string>
+</resources>

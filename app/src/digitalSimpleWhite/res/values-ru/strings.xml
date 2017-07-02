@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Белый Простой Циферблат для Энергосберегающих Цифровых Часов</string>
+    <string name="white_simple">Белые простые (плагин)</string><!-- Используется в наименовании циферблатов в главном приложении. name="..." должно совпадать с именем папки и файла .obj в assets\textures\packs -->
+
+    <!-- Список главных приложений для запуска плагина. В части параметра name="parameter_name" и name="parameter_id" parameter должен совпадать с именем файла без расширения в папке assets\main_apps -->
+    <string name="app1_digital_clocks_lite_name">Энергосберегающие Цифровые Часы Живые Обои</string>
+    <string name="app2_digital_clocks_name">Энергосберегающие Цифровые Часы Живые Обои Pro</string>
+
+    <string name="app1_digital_clocks_lite_id">com.maxlab.digitalclocksbatterysavewallpaperlite</string>
+    <string name="app2_digital_clocks_id">com.maxlab.digitalclocksbatterysavewallpaper</string>
+</resources>

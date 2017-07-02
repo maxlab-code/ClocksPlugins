@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    signingConfigs {
+        config {
+            keyAlias 'digital clocks white simple plugin'
+            keyPassword 'your_key_password'
+            storeFile file( 'C:/your_keystore_location' )
+            storePassword 'your_keystore_password'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.maxlab.clocksplugins"
+        minSdkVersion 9
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    productFlavors {
+        digitalSimpleWhite {
+            versionCode 1
+            versionName "1.0"
+            applicationId "com.maxlab.bsclocks.plugins.digital.white_simple"
+        }
+        digitalBlack {
+            versionCode 1
+            versionName "1.0"
+            applicationId "com.maxlab.bsclocks.plugins.digital.black"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig null
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile( 'proguard-android.txt' ), 'proguard-rules.pro'
+        }
+    }
+    android.productFlavors.digitalSimpleWhite.signingConfig signingConfigs.config
+    android.productFlavors.digitalBlack.signingConfig signingConfigs.config
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree( dir: 'libs', include: [ '*.jar' ] )
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+//    compile 'com.google.android.gms:play-services-base:9.2.0'
+//    compile 'com.android.support:cardview-v7:25.3.1'
+}

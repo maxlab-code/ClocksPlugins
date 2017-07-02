@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Общие строки -->
+    <string name="header_text">Это плагин-циферблат для Энергосберегающих Часов</string>
+    <string name="general_text">Нажмите на установленное приложение, чтобы с помощью него открыть циферблат</string>
+    <string name="not_installed_text">Нажмите на ссылку, чтобы установить подходящее приложение для этого плагина</string>
+    <string name="installed">Установлены</string>
+    <string name="not_installed">Не установлены</string>
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <!-- Common strings -->
+    <string name="header_text">This ia a clockface plugin for Battery Saving Clocks</string>
+    <string name="general_text">Click on installed app to open this clockface in it</string>
+    <string name="not_installed_text">Click on app to install application suitable for this plugin</string>
+    <string name="installed">Installed</string>
+    <string name="not_installed">Not installed</string>
+</resources>
