@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.ViewHolder> {
     private ArrayList<String> mDataset;
-    private String tempStr;
 //    private Context context;
     private boolean isInstalled = false;
     public Activity activity;
@@ -37,6 +36,7 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
         public ImageView image;
         public TextView text;
         public View view;
+        private String link;
 
 
         public ViewHolder( View layout ) {
@@ -77,10 +77,10 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Context context = holder.view.getContext();
-        tempStr = mDataset.get( position ).substring( 0, mDataset.get( position ).lastIndexOf( '.' ) );
+        holder.link = mDataset.get( position ).substring( 0, mDataset.get( position ).lastIndexOf( '.' ) );
         holder.text.setText(
                 context.getResources().getString(
-                        context.getResources().getIdentifier( tempStr + "_name", "string", context.getPackageName() )
+                        context.getResources().getIdentifier( holder.link + "_name", "string", context.getPackageName() )
         ) );
         try {
             InputStream istr = context.getAssets().open( "main_apps/" + mDataset.get( position ) );
@@ -90,13 +90,15 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
         } catch (IOException e) {
             e.printStackTrace();
         }
+        holder.view.setTag( holder );
         holder.view.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View view ) {
                 final Context context = view.getContext();
+                ViewHolder holder = ( ViewHolder ) view.getTag();
                 if ( isInstalled ) {
                     Intent intent = context.getPackageManager().getLaunchIntentForPackage( context.getResources().getString(
-                            context.getResources().getIdentifier( tempStr + "_id", "string", context.getPackageName() ) ) );
+                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ) );
                     if ( null != intent ) {
                         intent.setFlags( 0 );
                         intent.putExtra( "set_plugin", BuildConfig.APPLICATION_ID );
@@ -104,7 +106,7 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
                     }
                 } else {
                     Common.goGooglePlay( context.getResources().getString(
-                            context.getResources().getIdentifier( tempStr + "_id", "string", context.getPackageName() ) ), context );
+                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ), context );
                 }
             }
         } );
