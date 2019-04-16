@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">White clockface for Battery Saving Analog Clocks</string>
+    <string name="white_plugin">White (plugin)</string><!-- Used in naming of clockfaces in the main application. name="..." must be the same as folder name and .obj file in assets\textures\packs -->
+    <string name="white_plugin_date_pos" translatable="false">0.5</string>
+    <string name="white_plugin_arrow_width" translatable="false">140</string>
+
+    <!-- List of main applications for launching the plugin. In part of name="parameter_name" and name="parameter_id" parameter must be the same as file name without extension in assets\main_apps folder -->
+    <string name="app1_analog_clocks_lite_name">Battery Saving Analog Clocks Live Wallpaper Lite</string>
+    <string name="app2_analog_clocks_name">Battery Saving Analog Clocks Live Wallpaper</string>
+
+    <string name="app1_analog_clocks_lite_id" translatable="false">com.maxlab.analogclocksbatterysavewallpaperlite</string>
+    <string name="app2_analog_clocks_id" translatable="false">com.maxlab.analogclocksbatterysavewallpaper</string>
+</resources>

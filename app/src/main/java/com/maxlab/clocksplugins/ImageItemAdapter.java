@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +26,18 @@ import java.util.ArrayList;
 public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.ViewHolder> {
     private ArrayList<String> mDataset;
 //    private Context context;
-    private boolean isInstalled = false;
-    public Activity activity;
+    private boolean isInstalled;
+    private View.OnClickListener onClickListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public ImageView image;
-        public TextView text;
-        public View view;
-        private String link;
-
+        ImageView image;
+        TextView text;
+        View view;
+        String link;
 
         public ViewHolder( View layout ) {
             super(layout);
@@ -48,32 +48,48 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ImageItemAdapter( ArrayList<String> myDataset, final boolean isInstalledList, Activity act ) {
+    public ImageItemAdapter( ArrayList<String> myDataset, final boolean isInstalledList, final Activity act ) {
         mDataset = myDataset;
-        activity = act;
         isInstalled = isInstalledList;
+        onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick( View view ) {
+                final Context context = view.getContext();
+                ViewHolder holder = ( ViewHolder ) view.getTag();
+                if ( isInstalled ) {
+                    Intent intent = context.getPackageManager().getLaunchIntentForPackage( context.getResources().getString(
+                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ) );
+                    if ( null != intent ) {
+                        intent.setFlags( 0 );
+                        intent.putExtra( "set_plugin", BuildConfig.APPLICATION_ID );
+                        act.startActivityForResult( intent, 1 );
+                    }
+                } else {
+                    Common.goGooglePlay( context.getResources().getString(
+                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ), context );
+                }
+            }
+        };
     }
 
     // Create new views (invoked by the layout manager)
-    @Override
-    public ImageItemAdapter.ViewHolder onCreateViewHolder( ViewGroup parent,
+    @Override @NonNull
+    public ImageItemAdapter.ViewHolder onCreateViewHolder( @NonNull ViewGroup parent,
                                                    int viewType ) {
         // create a new view
         LinearLayout layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate( R.layout.item_with_icon, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ImageView icon = (ImageView) layout.findViewById(R.id.icon);
-        icon.setImageResource( R.color.colorPrimary );
-        TextView text = ((TextView) layout.findViewById(R.id.text));
-        text.setText( "AppName" );
+        ( (ImageView) layout.findViewById(R.id.icon) ).setImageResource( R.color.colorPrimary );
+//        TextView text = ((TextView) layout.findViewById(R.id.text));
+//        text.setText( "AppName" );
 
-        ViewHolder vh = new ViewHolder( layout );
-        return vh;
+        return new ViewHolder( layout );
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder( ViewHolder holder, int position ) {
+    public void onBindViewHolder( @NonNull ViewHolder holder, int position ) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Context context = holder.view.getContext();
@@ -91,25 +107,7 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
             e.printStackTrace();
         }
         holder.view.setTag( holder );
-        holder.view.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View view ) {
-                final Context context = view.getContext();
-                ViewHolder holder = ( ViewHolder ) view.getTag();
-                if ( isInstalled ) {
-                    Intent intent = context.getPackageManager().getLaunchIntentForPackage( context.getResources().getString(
-                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ) );
-                    if ( null != intent ) {
-                        intent.setFlags( 0 );
-                        intent.putExtra( "set_plugin", BuildConfig.APPLICATION_ID );
-                        activity.startActivityForResult( intent, 1 );
-                    }
-                } else {
-                    Common.goGooglePlay( context.getResources().getString(
-                            context.getResources().getIdentifier( holder.link + "_id", "string", context.getPackageName() ) ), context );
-                }
-            }
-        } );
+        holder.view.setOnClickListener( onClickListener );
     }
 
     // Return the size of your dataset (invoked by the layout manager)
